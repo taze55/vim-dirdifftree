@@ -27,10 +27,12 @@ With Vim 8+'s default packaging system:
 
     :DirDiffTree <dir1> <dir2>
 
-To open DirDiff from the command line, run `vim -c "DirDiff dir1 dir2"`
+To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
 ## License
 
+```
 Copyright (c) 2023 taze55
 Released under the MIT license
 https://opensource.org/license/mit/
+```
