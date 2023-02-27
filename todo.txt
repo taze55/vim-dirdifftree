@@ -1,0 +1,4 @@
+ignorecase
+can open above right bottom
+can setting thread string
+can setting symbol

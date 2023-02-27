@@ -1,0 +1,30 @@
+[tool.poetry]
+    name        = "vim-dirdifftree"
+    version     = "0.1.0"
+    description = ""
+    authors     = ["taze55 <taze_a28391214@icloud.com>"]
+    readme      = "README.md"
+    packages    = [{ include = "**/*.py", from = "python3" }]
+
+    [tool.poetry.dependencies]
+        python = "^3.8"
+
+    [tool.poetry.group.dev.dependencies]
+        black  = "^23.1.0"
+        pytest = "^7.2.1"
+
+[tool.pytest.ini_options]
+    pythonpath = "."
+
+[tool.black]
+    line-length = 120
+
+[tool.pyright]
+    include              = ["python3"]
+    exclude              = ["**/node_modules", "**/__pycache__"]
+    pythonVersion        = "3.8"
+    reportMissingImports = false
+
+[build-system]
+    requires      = ["poetry-core"]
+    build-backend = "poetry.core.masonry.api"
