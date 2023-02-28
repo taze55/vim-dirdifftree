@@ -41,10 +41,10 @@ To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
 The following options are available.
 
-| Options                          | Default value |
-| -------------------------------- | ------------- |
-| g:DirDiffTreeMainWindowWidth     | 64            |
-| g:DirDiffTreeNoneFileWindowWidth | 32            |
+| Options                          | Default value | Type    |
+| -------------------------------- | ------------- | ------- |
+| g:DirDiffTreeMainWindowWidth     | 64            | Integer |
+| g:DirDiffTreeNoneFileWindowWidth | 32            | Integer |
 
 ## Syntax highlighting
 
@@ -52,7 +52,6 @@ The following highlight groups are available.
 
 | Highlight groups        | Default link |
 | ----------------------- | ------------ |
-| DirDiffTreeComment      | Comment      |
 | DirDiffTreeTopDirectory | Title        |
 | DirDiffTreeThread       | Comment      |
 | DirDiffTreeDirectory    | Directory    |
