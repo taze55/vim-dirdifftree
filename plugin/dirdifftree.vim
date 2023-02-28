@@ -6,6 +6,15 @@ if exists('g:loaded_dirdifftree')
 endif
 let g:loaded_dirdifftree = 1
 
+" Options
+if !exists("g:DirDiffTreeMainWindowWidth")
+    let g:DirDiffTreeMainWindowWidth = 64
+endif
+
+if !exists("g:DirDiffTreeNoneFileWindowWidth")
+    let g:DirDiffTreeNoneFileWindowWidth = 32
+endif
+
 py3 import dirdifftree
 
 " Public Interface:

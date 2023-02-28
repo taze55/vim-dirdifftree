@@ -216,7 +216,8 @@ def _dirDiffTreeOpenRenderResult(renderResult: RenderResult, row: int) -> None:
 
     # formatting main window
     vim.current.window = state.mainWindow
-    vim.command(f"silent! vertical resize 64")
+    dirDiffTreeMainWindowWidth = vim.eval("g:DirDiffTreeMainWindowWidth")
+    vim.command(f"silent! vertical resize {dirDiffTreeMainWindowWidth}")
     vim.command(f"silent! match DirDiffTreeSelected '\\%{row}l\\%>{startCol}c\\%<{endCol}c'")
 
     # create right side
@@ -233,6 +234,16 @@ def _dirDiffTreeOpenRenderResult(renderResult: RenderResult, row: int) -> None:
         raise (ex)
     state.rightWindow = vim.current.window
     state.rightBuffer = vim.current.buffer
+
+    # resize none file windows
+    dirDiffTreeNoneFileWindowWidth = int(vim.eval("g:DirDiffTreeNoneFileWindowWidth"))
+    if dirDiffTreeNoneFileWindowWidth != 0:
+        if diffTargets.left == "":
+            vim.current.window = state.leftWindow
+            vim.command(f"vert resize {dirDiffTreeNoneFileWindowWidth}")
+        if diffTargets.right == "":
+            vim.current.window = state.rightWindow
+            vim.command(f"vert resize {dirDiffTreeNoneFileWindowWidth}")
 
     # finishing
     vim.current.window = state.mainWindow

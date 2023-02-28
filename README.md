@@ -37,19 +37,28 @@ git clone git://github.com/taze55/vim-dirdifftree
 
 To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
+## Options
+
+The following options are available.
+
+| Options                          | Default value |
+| -------------------------------- | ------------- |
+| g:DirDiffTreeMainWindowWidth     | 64            |
+| g:DirDiffTreeNoneFileWindowWidth | 32            |
+
 ## Syntax highlighting
 
 The following highlight groups are available.
 
-```vim
-DirDiffTreeComment      " default links to Comment
-DirDiffTreeTopDirectory " default links to Title
-DirDiffTreeThread       " default links to Comment
-DirDiffTreeDirectory    " default links to Directory
-DirDiffTreeAdd          " default links to PreProc
-DirDiffTreeDelete       " default links to PreProc
-DirDiffTreeSelected     " default links to Visual
-```
+| Highlight groups        | Default link |
+| ----------------------- | ------------ |
+| DirDiffTreeComment      | Comment      |
+| DirDiffTreeTopDirectory | Title        |
+| DirDiffTreeThread       | Comment      |
+| DirDiffTreeDirectory    | Directory    |
+| DirDiffTreeAdd          | PreProc      |
+| DirDiffTreeDelete       | PreProc      |
+| DirDiffTreeSelected     | Visual       |
 
 You can overwrite these highlight groups in your colorscheme.
 
