@@ -4,7 +4,7 @@ DirDiffTree plugin for Vim
 
 Diff two directories and represent them as a tree
 
-<!-- ![DirDiffTree screenshot](./image/screenshot.png) -->
+![DirDiffTree screenshot](./image/screenshot.png)
 
 ## Installation
 
@@ -41,11 +41,11 @@ To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
 The following options are available.
 
-| Options                          | Default value                                                          |
-| -------------------------------- | ---------------------------------------------------------------------- |
-| g:DirDiffTreeMainWindowWidth     | 64                                                                     |
-| g:DirDiffTreeNoneFileWindowWidth | 32                                                                     |
-| g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}` |
+| Options                          | Default value                                                                  |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| g:DirDiffTreeMainWindowWidth     | 64                                                                             |
+| g:DirDiffTreeNoneFileWindowWidth | 32                                                                             |
+| g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ',`<br />` 'branch': '├─', 'corner': '└─'}` |
 
 ## Syntax highlighting
 
