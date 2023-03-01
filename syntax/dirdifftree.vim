@@ -16,8 +16,23 @@ syn match  DirDiffTreeUsageNote "\s*\zs[^,:]\+\ze\(,\|$\)" contained nextgroup=D
 syn match  DirDiffTreeUsageSep2 "," contained
 syn cluster DirDiffTreeUsageGroup contains=DirDiffTreeUsageCmd,DirDiffTreeUsageSep1,DirDiffTreeUsageNote,DirDiffTreeUsageSep2
 
+function! DirDiffTreeThreadRegex()
+  let l:concatenate =
+\ '^\(' . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeThreads['blank']) .
+\ '\|'  . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeThreads['vertical']) .
+\ '\|'  . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeThreads['branch']) .
+\ '\|'  . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeThreads['corner']) . '\)\+'
+  return l:concatenate
+endfunction
+
+" https://stackoverflow.com/questions/11311431/how-to-escape-search-patterns-or-regular-expressions-in-vimscript
+" char '?' does not need to be escaped
+function! DirDiffTreeEscapeForVimRegexp(str)
+  return escape(a:str, '^$.*/\[]~')
+endfunction
+
 syn region DirDiffTreeTopDirectory oneline start="^\%3l\%1c" end="$"
-syn match  DirDiffTreeThread "^\(    \|│  \|├─\|└─\)\+" nextgroup=DirDiffTreeDirectory
+exe 'syn match  DirDiffTreeThread "' . DirDiffTreeThreadRegex() . '" nextgroup=DirDiffTreeDirectory'
 syn match  DirDiffTreeDirectory "🇩 \zs.\+" contains=DirDiffTreeAdd,DirDiffTreeDelete
 syn match  DirDiffTreeAdd "\[+\]"
 syn match  DirDiffTreeDelete "\[-\]"

@@ -5,7 +5,8 @@ import os
 import pytest
 from python3.dirdifftree_lib import *
 
-defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False)
+defaultThreadStrs: Dict[ThreadKey, str] = {"blank": "    ", "vertical": "│  ", "branch": "├─", "corner": "└─"}
+defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs)
 
 # https://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory
 baseDir = f"{os.path.dirname(os.path.realpath(__file__))}/test_data"
@@ -260,7 +261,7 @@ def test_1900_concat_top_alone_dir_only_dir():
     expected = """\
 left/right / A / B / C
 """
-    actual = renderTree("test_19xx", RenderOption(fileLexicalOrder, "right", True, True))
+    actual = renderTree("test_19xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
     assert actual == expected
 
 
@@ -271,7 +272,7 @@ left/right / A / B / C
 ├─🇫 11 [-]
 └─🇫 z [+]
 """
-    actual = renderTree("test_20xx", RenderOption(fileLexicalOrder, "right", True, True))
+    actual = renderTree("test_20xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
     assert actual == expected
 
 
@@ -348,7 +349,7 @@ left/right
     ├─🇫 z [+]
     └─🇩 P / Q / R [-]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", True, True))
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
     assert actual == expected
 
 
@@ -395,7 +396,7 @@ left/right
         └─🇩 Q
             └─🇩 R [-]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", False, False))
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", False, False, defaultThreadStrs))
     assert actual == expected
 
 
@@ -434,7 +435,46 @@ left/right
     ├─🇫 z [-]
     └─🇩 P / Q / R [+]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "left", True, False))
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "left", True, False, defaultThreadStrs))
+    assert actual == expected
+
+
+def test_2104_mixed_another_threads():
+    expected = """\
+left/right
+^$.*🇫 1
+^$.*🇫 11
+^$.*🇫 z [+]
+^$.*🇩 A
+BB()^$.*🇫 1 [-]
+BB()^$.*🇫 11
+BB()^$.*🇫 z
+BB()?/\\~🇩 B
+BB()[]AA^$.*🇩 C [-]
+BB()[]AABB()^$.*🇫 1 [-]
+BB()[]AABB()^$.*🇫 11 [-]
+BB()[]AABB()?/\\~🇫 z [-]
+BB()[]AA^$.*🇩 D / E
+BB()[]AABB()^$.*🇫 1 [-]
+BB()[]AABB()^$.*🇫 11 [+]
+BB()[]AABB()?/\\~🇫 z
+BB()[]AA^$.*🇩 F / G / H [-]
+BB()[]AABB()^$.*🇫 1 [-]
+BB()[]AABB()^$.*🇫 11 [-]
+BB()[]AABB()?/\\~🇫 z [-]
+BB()[]AA^$.*🇩 I / J [+] / K [+]
+BB()[]AABB()^$.*🇫 1 [+]
+BB()[]AABB()^$.*🇫 11 [+]
+BB()[]AABB()?/\\~🇫 z [+]
+BB()[]AA?/\\~🇩 L / M / N
+?/\\~🇩 O
+[]AA^$.*🇫 1
+[]AA^$.*🇫 11 [+]
+[]AA^$.*🇫 z [-]
+[]AA?/\\~🇩 P / Q / R [+]
+"""
+    threadStrs: Dict[ThreadKey, str] = {"blank": "[]AA", "vertical": "BB()", "branch": "^$.*", "corner": "?/\\~"}
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "left", True, False, threadStrs))
     assert actual == expected
 
 

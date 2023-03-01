@@ -15,6 +15,10 @@ if !exists("g:DirDiffTreeNoneFileWindowWidth")
     let g:DirDiffTreeNoneFileWindowWidth = 32
 endif
 
+if !exists("g:DirDiffTreeThreads")
+    let g:DirDiffTreeThreads = {'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}
+endif
+
 py3 import dirdifftree
 
 " Public Interface:

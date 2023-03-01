@@ -69,13 +69,15 @@ def dirDiffTreeExecute(
 
     # rendering
     topNode = buildTree(left, right)
-    renderResultDetailList = renderNode(topNode, RenderOption(comparison, newerSide, concatAloneDir, concatTopAloneDir))
+    threadStrs = vim.eval("g:DirDiffTreeThreads")
+    renderOption = RenderOption(comparison, newerSide, concatAloneDir, concatTopAloneDir, threadStrs)
+    renderResultDetailList = renderNode(topNode, renderOption)
 
     # starting
     fileName = _getMainWindowFileName()
     if not _isTabpageReusable():
         vim.command("tabnew")
-    vim.command(f"set filetype=dirdifftree | setlocal noreadonly | setlocal modifiable | silent file {fileName}")
+    vim.command(f"setlocal filetype=dirdifftree | setlocal noreadonly | setlocal modifiable | silent file {fileName}")
 
     # save state
     state = ExecutionState(left, right)

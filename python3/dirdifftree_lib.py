@@ -47,12 +47,15 @@ TreeNodeComparison = Callable[[TreeNode, TreeNode], int]
 
 NodeMap = Dict[str, TreeNode]
 
+ThreadKey = Literal["blank", "vertical", "branch", "corner"]
+
 
 class RenderOption(NamedTuple):
     comparison: TreeNodeComparison
     newerSide: LeftOrRight
     concatAloneDir: bool
     concatTopAloneDir: bool
+    threadStrs: Dict[ThreadKey, str]
 
 
 class RenderResultDetail(NamedTuple):
@@ -166,9 +169,6 @@ def _renderNodeChildren(
     threadStack: List[str],
     renderOption: RenderOption,
 ) -> None:
-    CURRENT_THREAD_END = "└─"
-    CURRENT_THREAD_BRANCH = "├─"
-
     marker = node.getMarker(renderOption.newerSide)
     if isAloneDir:
         text = f"{resultList[-1].text} {os.sep} {node.name}"
@@ -177,7 +177,7 @@ def _renderNodeChildren(
         resultList[-1] = RenderResultDetail(text, node, resultList[-1].nodeNameStartCol, nodeNameEndCol)
     else:
         threads = "".join(threadStack)
-        threads += CURRENT_THREAD_END if isLast else CURRENT_THREAD_BRANCH
+        threads += renderOption.threadStrs["corner"] if isLast else renderOption.threadStrs["branch"]
         symbol = node.getSymbol()
         text = f"{threads}{symbol}"
         nodeNameStartCol = len(text.encode())
@@ -186,12 +186,9 @@ def _renderNodeChildren(
         text += marker
         resultList.append(RenderResultDetail(text, node, nodeNameStartCol, nodeNameEndCol))
 
-    STACK_THREAD_ENDED = "    "
-    STACK_THREAD_CONTINUING = "│  "
-
     if node.dirOrFile == "dir":
         if not isAloneDir:
-            threadStack.append(STACK_THREAD_ENDED if isLast else STACK_THREAD_CONTINUING)
+            threadStack.append(renderOption.threadStrs["blank"] if isLast else renderOption.threadStrs["vertical"])
 
         node.children.sort(key=functools.cmp_to_key(renderOption.comparison))
         lastIndex = len(node.children) - 1

@@ -43,10 +43,10 @@ function! <SID>DirDiffTreeFoldExpr()
 
   let l:i = 0
   while l:i < l:fold_nest_max
-    if     <SID>StartsWithThread('    ')
-    elseif <SID>StartsWithThread('│  ')
-    elseif <SID>StartsWithThread('├─')
-    elseif <SID>StartsWithThread('└─')
+    if     <SID>StartsWithThread(g:DirDiffTreeThreads['blank'])
+    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['vertical'])
+    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['branch'])
+    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['corner'])
     else
       break
     endif
