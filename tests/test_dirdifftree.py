@@ -6,7 +6,8 @@ import pytest
 from python3.dirdifftree_lib import *
 
 defaultThreadStrs: Dict[ThreadKey, str] = {"blank": "    ", "vertical": "│  ", "branch": "├─", "corner": "└─"}
-defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs)
+defaultIconStrs: Dict[IconKey, str] = {"dir": "🇩 ", "file": "🇫 "}
+defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, defaultIconStrs)
 
 # https://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory
 baseDir = f"{os.path.dirname(os.path.realpath(__file__))}/test_data"
@@ -261,7 +262,9 @@ def test_1900_concat_top_alone_dir_only_dir():
     expected = """\
 left/right / A / B / C
 """
-    actual = renderTree("test_19xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
+    actual = renderTree(
+        "test_19xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
+    )
     assert actual == expected
 
 
@@ -272,7 +275,9 @@ left/right / A / B / C
 ├─🇫 11 [-]
 └─🇫 z [+]
 """
-    actual = renderTree("test_20xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
+    actual = renderTree(
+        "test_20xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
+    )
     assert actual == expected
 
 
@@ -349,7 +354,9 @@ left/right
     ├─🇫 z [+]
     └─🇩 P / Q / R [-]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs))
+    actual = renderTree(
+        "test_21xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
+    )
     assert actual == expected
 
 
@@ -396,7 +403,9 @@ left/right
         └─🇩 Q
             └─🇩 R [-]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "right", False, False, defaultThreadStrs))
+    actual = renderTree(
+        "test_21xx", RenderOption(fileLexicalOrder, "right", False, False, defaultThreadStrs, defaultIconStrs)
+    )
     assert actual == expected
 
 
@@ -435,7 +444,9 @@ left/right
     ├─🇫 z [-]
     └─🇩 P / Q / R [+]
 """
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "left", True, False, defaultThreadStrs))
+    actual = renderTree(
+        "test_21xx", RenderOption(fileLexicalOrder, "left", True, False, defaultThreadStrs, defaultIconStrs)
+    )
     assert actual == expected
 
 
@@ -473,8 +484,51 @@ BB()[]AA?/\\~🇩 L / M / N
 []AA^$.*🇫 z [-]
 []AA?/\\~🇩 P / Q / R [+]
 """
-    threadStrs: Dict[ThreadKey, str] = {"blank": "[]AA", "vertical": "BB()", "branch": "^$.*", "corner": "?/\\~"}
-    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, "left", True, False, threadStrs))
+    anotherThreadStrs: Dict[ThreadKey, str] = {"blank": "[]AA", "vertical": "BB()", "branch": "^$.*", "corner": "?/\\~"}
+    actual = renderTree(
+        "test_21xx", RenderOption(fileLexicalOrder, "left", True, False, anotherThreadStrs, defaultIconStrs)
+    )
+    assert actual == expected
+
+
+def test_2105_mixed_another_icons():
+    expected = """\
+left/right
+├─1
+├─11
+├─z [-]
+├─[D]A
+│  ├─1 [+]
+│  ├─11
+│  ├─z
+│  └─[D]B
+│      ├─[D]C [+]
+│      │  ├─1 [+]
+│      │  ├─11 [+]
+│      │  └─z [+]
+│      ├─[D]D / E
+│      │  ├─1 [+]
+│      │  ├─11 [-]
+│      │  └─z
+│      ├─[D]F / G / H [+]
+│      │  ├─1 [+]
+│      │  ├─11 [+]
+│      │  └─z [+]
+│      ├─[D]I / J [-] / K [-]
+│      │  ├─1 [-]
+│      │  ├─11 [-]
+│      │  └─z [-]
+│      └─[D]L / M / N
+└─[D]O
+    ├─1
+    ├─11 [-]
+    ├─z [+]
+    └─[D]P / Q / R [-]
+"""
+    anotherIconStrs: Dict[IconKey, str] = {"dir": "[D]", "file": ""}
+    actual = renderTree(
+        "test_21xx", RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, anotherIconStrs)
+    )
     assert actual == expected
 
 

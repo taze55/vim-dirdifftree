@@ -46,6 +46,7 @@ The following options are available.
 | g:DirDiffTreeMainWindowWidth     | 64                                                                             |
 | g:DirDiffTreeNoneFileWindowWidth | 32                                                                             |
 | g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ',`<br />` 'branch': '├─', 'corner': '└─'}` |
+| g:DirDiffTreeIcons               | `{'dir': '🇩 ', 'file': '🇫 '}`                                                |
 
 ## Syntax highlighting
 

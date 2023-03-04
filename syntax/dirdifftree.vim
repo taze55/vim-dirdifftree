@@ -33,9 +33,9 @@ endfunction
 
 syn region DirDiffTreeTopDirectory oneline start="^\%3l\%1c" end="$"
 exe 'syn match  DirDiffTreeThread "' . DirDiffTreeThreadRegex() . '" nextgroup=DirDiffTreeDirectory'
-syn match  DirDiffTreeDirectory "🇩 \zs.\+" contains=DirDiffTreeAdd,DirDiffTreeDelete
-syn match  DirDiffTreeAdd "\[+\]"
-syn match  DirDiffTreeDelete "\[-\]"
+exe 'syn match  DirDiffTreeDirectory "' . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeIcons['dir']) . '\zs.\+" contains=DirDiffTreeAdd,DirDiffTreeDelete'
+syn match  DirDiffTreeAdd "\[+\]$"
+syn match  DirDiffTreeDelete "\[-\]$"
 
 hi def link DirDiffTreeComment      Comment
 hi def link DirDiffTreeUsage        DirDiffTreeComment

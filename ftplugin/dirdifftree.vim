@@ -42,6 +42,7 @@ function! <SID>DirDiffTreeFoldExpr()
   let l:fold_nest_max = &foldnestmax + 1
 
   let l:i = 0
+  let l:match_threads = 0
   while l:i < l:fold_nest_max
     if     <SID>StartsWithThread(g:DirDiffTreeThreads['blank'])
     elseif <SID>StartsWithThread(g:DirDiffTreeThreads['vertical'])
@@ -50,17 +51,34 @@ function! <SID>DirDiffTreeFoldExpr()
     else
       break
     endif
+    let l:match_threads = 1
     let l:i += 1
   endwhile
 
-  if <SID>StartsWith(s:line, '🇩 ')
-    return '>' . s:fold_level
+  " other
+  if l:match_threads == 0
+    return 0
   endif
 
-  if <SID>StartsWith(s:line, '🇫 ')
-    return s:fold_level - 1
+  let l:dir_icon = g:DirDiffTreeIcons['dir']
+  let l:file_icon = g:DirDiffTreeIcons['file']
+
+  " dir or file
+  if l:dir_icon != ''
+    if <SID>StartsWith(s:line, l:dir_icon)
+      return '>' . s:fold_level
+    else
+      return s:fold_level - 1
+    endif
+  elseif l:file_icon  != ''
+    if <SID>StartsWith(s:line, l:file_icon)
+      return s:fold_level - 1
+    else
+      return '>' . s:fold_level
+    endif
   endif
 
+  " difficult to discern if nothing is set on g:DirDiffTreeIcons.
   return 0
 endfunction
 

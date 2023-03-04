@@ -70,7 +70,8 @@ def dirDiffTreeExecute(
     # rendering
     topNode = buildTree(left, right)
     threadStrs = vim.eval("g:DirDiffTreeThreads")
-    renderOption = RenderOption(comparison, newerSide, concatAloneDir, concatTopAloneDir, threadStrs)
+    iconsStrs = vim.eval("g:DirDiffTreeIcons")
+    renderOption = RenderOption(comparison, newerSide, concatAloneDir, concatTopAloneDir, threadStrs, iconsStrs)
     renderResultDetailList = renderNode(topNode, renderOption)
 
     # starting

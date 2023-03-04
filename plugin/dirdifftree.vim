@@ -19,6 +19,14 @@ if !exists("g:DirDiffTreeThreads")
     let g:DirDiffTreeThreads = {'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}
 endif
 
+if !exists("g:DirDiffTreeIcons")
+  if has('osxdarwin')
+    let g:DirDiffTreeIcons = {'dir': '🇩 ', 'file': '🇫 '}
+  else
+    let g:DirDiffTreeIcons = {'dir': '[D]', 'file': ''}
+  endif
+endif
+
 py3 import dirdifftree
 
 " Public Interface:

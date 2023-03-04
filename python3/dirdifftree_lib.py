@@ -25,9 +25,6 @@ class TreeNode:
     def childIsAloneDir(self) -> bool:
         return len(self.children) == 1 and self.children[0].dirOrFile == "dir"
 
-    def getSymbol(self) -> str:
-        return "🇩 " if self.dirOrFile == "dir" else "🇫 "
-
     def getMarker(self, newerSide: LeftOrRight) -> str:
         if self.existsIn == "both":
             return ""
@@ -49,6 +46,8 @@ NodeMap = Dict[str, TreeNode]
 
 ThreadKey = Literal["blank", "vertical", "branch", "corner"]
 
+IconKey = DirOrFile
+
 
 class RenderOption(NamedTuple):
     comparison: TreeNodeComparison
@@ -56,6 +55,7 @@ class RenderOption(NamedTuple):
     concatAloneDir: bool
     concatTopAloneDir: bool
     threadStrs: Dict[ThreadKey, str]
+    iconStrs: Dict[IconKey, str]
 
 
 class RenderResultDetail(NamedTuple):
@@ -178,8 +178,9 @@ def _renderNodeChildren(
     else:
         threads = "".join(threadStack)
         threads += renderOption.threadStrs["corner"] if isLast else renderOption.threadStrs["branch"]
-        symbol = node.getSymbol()
-        text = f"{threads}{symbol}"
+        icon = renderOption.iconStrs["dir"] if node.dirOrFile == "dir" else renderOption.iconStrs["file"]
+
+        text = f"{threads}{icon}"
         nodeNameStartCol = len(text.encode())
         text += node.name
         nodeNameEndCol = len(text.encode())
