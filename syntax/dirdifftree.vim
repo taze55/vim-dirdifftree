@@ -10,9 +10,9 @@ set cpoptions&vim
 
 syn region DirDiffTreeComment oneline start="//" end="$" contains=DirDiffTreeUsage
 syn region DirDiffTreeUsage matchgroup=DirDiffTreeComment oneline start="Usage: " end="$" contained keepend contains=@DirDiffTreeUsageGroup
-syn match  DirDiffTreeUsageCmd "\s*\zs[^,:]\+\ze:" contained nextgroup=DirDiffTreeUsageSep1
-syn match  DirDiffTreeUsageSep1 ":" contained nextgroup=DirDiffTreeUsageNote
-syn match  DirDiffTreeUsageNote "\s*\zs[^,:]\+\ze\(,\|$\)" contained nextgroup=DirDiffTreeUsageSep2
+syn match  DirDiffTreeUsageCmd "\s*\zs[^,:]\+\ze:" contained
+syn match  DirDiffTreeUsageSep1 ":" contained
+syn match  DirDiffTreeUsageNote "\s*\zs[^,:]\+\ze\(,\|$\)" contained
 syn match  DirDiffTreeUsageSep2 "," contained
 syn cluster DirDiffTreeUsageGroup contains=DirDiffTreeUsageCmd,DirDiffTreeUsageSep1,DirDiffTreeUsageNote,DirDiffTreeUsageSep2
 
@@ -32,8 +32,11 @@ function! DirDiffTreeEscapeForVimRegexp(str)
 endfunction
 
 syn region DirDiffTreeTopDirectory oneline start="^\%3l\%1c" end="$"
-exe 'syn match  DirDiffTreeThread "' . DirDiffTreeThreadRegex() . '" nextgroup=DirDiffTreeDirectory'
-exe 'syn match  DirDiffTreeDirectory "' . DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeIcons['dir']) . '\zs.\+" contains=DirDiffTreeAdd,DirDiffTreeDelete'
+exe 'syn match  DirDiffTreeThread "' . DirDiffTreeThreadRegex() . '"'
+let s:dir_icon = DirDiffTreeEscapeForVimRegexp(g:DirDiffTreeIcons['dir'])
+if s:dir_icon != ''
+  exe 'syn match  DirDiffTreeDirectory "' . s:dir_icon . '\zs.\+" contains=DirDiffTreeAdd,DirDiffTreeDelete'
+endif
 syn match  DirDiffTreeAdd "\[+\]$"
 syn match  DirDiffTreeDelete "\[-\]$"
 
