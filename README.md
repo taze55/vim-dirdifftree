@@ -41,12 +41,12 @@ To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
 The following options are available.
 
-| Options                          | Default value                                                                  |
-| -------------------------------- | ------------------------------------------------------------------------------ |
-| g:DirDiffTreeMainWindowWidth     | 64                                                                             |
-| g:DirDiffTreeNoneFileWindowWidth | 32                                                                             |
-| g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ',`<br />` 'branch': '├─', 'corner': '└─'}` |
-| g:DirDiffTreeIcons               | `{'dir': '🇩 ', 'file': '🇫 '}`                                                |
+| Options                          | Default                                                                                    | Description                                                                                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| g:DirDiffTreeMainWindowWidth     | 56                                                                                         |                                                                                                                                               |
+| g:DirDiffTreeNoneFileWindowWidth | 32                                                                                         | Not used below 0                                                                                                                              |
+| g:DirDiffTreeThreads             | ` {'blank': '    ', 'vertical': '│  ',`` 'branch': '├─', 'corner': '└─'} `                 |                                                                                                                                               |
+| g:DirDiffTreeIcons               | macOS<br /> `{'dir': '🇩 ', 'file': '🇫 '}`<br />others<br /> `{'dir': '[D]', 'file': ''}` | Syntax hightlighing group "DirDiffTreeDirectory" does not work if 'dir' is empty'. If 'dir' and 'file' are both empty, folding does not work. |
 
 ## Syntax highlighting
 

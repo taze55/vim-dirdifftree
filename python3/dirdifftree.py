@@ -240,7 +240,7 @@ def _dirDiffTreeOpenRenderResult(renderResult: RenderResult, row: int) -> None:
 
     # resize none file windows
     dirDiffTreeNoneFileWindowWidth = int(vim.eval("g:DirDiffTreeNoneFileWindowWidth"))
-    if dirDiffTreeNoneFileWindowWidth != 0:
+    if dirDiffTreeNoneFileWindowWidth > 0:
         if diffTargets.left == "":
             vim.current.window = state.leftWindow
             vim.command(f"vert resize {dirDiffTreeNoneFileWindowWidth}")

@@ -8,7 +8,7 @@ let g:loaded_dirdifftree = 1
 
 " Options
 if !exists("g:DirDiffTreeMainWindowWidth")
-    let g:DirDiffTreeMainWindowWidth = 64
+    let g:DirDiffTreeMainWindowWidth = 56
 endif
 
 if !exists("g:DirDiffTreeNoneFileWindowWidth")
