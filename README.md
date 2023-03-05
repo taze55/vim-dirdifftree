@@ -4,7 +4,7 @@ DirDiffTree plugin for Vim
 
 Diff two directories and represent them as a tree
 
-![DirDiffTree screenshot](./image/screenshot.png)
+![DirDiffTree screenshot](https://vim-dirdifftree.s3.ap-northeast-1.amazonaws.com/screenshot.png)
 
 ## Installation
 
