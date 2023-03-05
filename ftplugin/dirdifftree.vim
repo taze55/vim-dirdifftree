@@ -1,5 +1,6 @@
-" Vim global plugin for diff directory
+" Vim global plugin for diff two directories and represent them as a tree
 " Maintainer: taze55 <taze_a28391214@icloud.com>
+" URL: https://github.com/taze55/vim-dirdifftree
 
 if exists("b:did_ftplugin")
   finish
@@ -16,11 +17,11 @@ setlocal foldtext=getline(v:foldstart)
 setlocal foldmethod=expr
 setlocal foldexpr=<SID>DirDiffTreeFoldExpr()
 
-nnoremap <buffer> <silent> o             :call DirDiffTreeOpen()<CR>
-nnoremap <buffer> <silent> <CR>          :call DirDiffTreeOpenOrToggleFold()<CR>
-nnoremap <buffer> <silent> <2-Leftmouse> :call DirDiffTreeOpenOrToggleFold()<CR>
-nnoremap <buffer> <silent> <C-N>         :call DirDiffTreeGotoNextFile()<CR>
-nnoremap <buffer> <silent> <C-P>         :call DirDiffTreeGotoPreviousFile()<CR>
+nnoremap <buffer> <silent> o             :call dirdifftree#open()<CR>
+nnoremap <buffer> <silent> <CR>          :call dirdifftree#open_or_toggle_fold()<CR>
+nnoremap <buffer> <silent> <2-Leftmouse> :call dirdifftree#open_or_toggle_fold()<CR>
+nnoremap <buffer> <silent> <C-N>         :call dirdifftree#goto_next_file()<CR>
+nnoremap <buffer> <silent> <C-P>         :call dirdifftree#goto_previous_file()<CR>
 
 function! <SID>DirDiffTreeFoldExpr()
   function! <SID>StartsWithThread(thread)

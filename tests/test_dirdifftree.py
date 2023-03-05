@@ -1,6 +1,9 @@
+# Vim global plugin for diff two directories and represent them as a tree
+# Maintainer: taze55 <taze_a28391214@icloud.com>
+# URL: https://github.com/taze55/vim-dirdifftree
+
 # It assumes that build_test_data.sh is working properly, so Windows is not taken into account.
 # Please use WSL2 or something.
-
 import os
 import pytest
 from python3.dirdifftree_lib import *

@@ -1,3 +1,7 @@
+# Vim global plugin for diff two directories and represent them as a tree
+# Maintainer: taze55 <taze_a28391214@icloud.com>
+# URL: https://github.com/taze55/vim-dirdifftree
+
 import sys
 from dirdifftree_lib import *
 
