@@ -58,6 +58,13 @@ class RenderOption(NamedTuple):
     iconStrs: Dict[IconKey, str]
 
 
+# Just extracted what we need from RenderResultDetail
+class RenderResult(NamedTuple):
+    node: TreeNode
+    nodeNameStartCol: int
+    nodeNameEndCol: int
+
+
 class RenderResultDetail(NamedTuple):
     text: str
     node: TreeNode

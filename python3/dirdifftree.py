@@ -18,13 +18,6 @@ import vim
 NODE_START_INDEX = 3
 
 
-# Just extracted what we need from RenderResultDetail
-class RenderResult(NamedTuple):
-    node: TreeNode
-    nodeNameStartCol: int
-    nodeNameEndCol: int
-
-
 class ExecutionState:
     def __init__(self, left: str, right: str) -> None:
         self.left = left
@@ -48,15 +41,7 @@ class DirDiffTreeState:
 _state: DirDiffTreeState = DirDiffTreeState()
 
 
-def dirDiffTreeExecute(
-    leftArg: str,
-    rightArg: str,
-    *,
-    comparison=fileLexicalOrder,
-    newerSide: LeftOrRight = "right",
-    concatAloneDir=True,
-    concatTopAloneDir=False,
-) -> None:
+def dirDiffTreeExecute(leftArg: str, rightArg: str) -> None:
     # preparing
     try:
         left = normalizeDirectory(leftArg)
@@ -71,7 +56,7 @@ def dirDiffTreeExecute(
     topNode = buildTree(left, right)
     threadStrs = vim.eval("g:DirDiffTreeThreads")
     iconsStrs = vim.eval("g:DirDiffTreeIcons")
-    renderOption = RenderOption(comparison, newerSide, concatAloneDir, concatTopAloneDir, threadStrs, iconsStrs)
+    renderOption = RenderOption(fileLexicalOrder, "right", True, False, threadStrs, iconsStrs)
     renderResultDetailList = renderNode(topNode, renderOption)
 
     # starting
