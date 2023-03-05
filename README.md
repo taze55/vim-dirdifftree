@@ -29,6 +29,10 @@ cd ~/.vim/pack/bundle/start
 git clone git://github.com/taze55/vim-dirdifftree
 ```
 
+## Requirement
+
+DirDiffTree requires python 3.8.10 or later to work. Install as needed.
+
 ## Usage
 
 ```vim
@@ -45,7 +49,7 @@ The following options are available.
 | -------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | g:DirDiffTreeMainWindowWidth     | 56                                                                                         |                                                                                                                                               |
 | g:DirDiffTreeNoneFileWindowWidth | 32                                                                                         | Not used below 0                                                                                                                              |
-| g:DirDiffTreeThreads             | ` {'blank': '    ', 'vertical': '│  ',`` 'branch': '├─', 'corner': '└─'} `                 |                                                                                                                                               |
+| g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}`                     |                                                                                                                                               |
 | g:DirDiffTreeIcons               | macOS<br /> `{'dir': '🇩 ', 'file': '🇫 '}`<br />others<br /> `{'dir': '[D]', 'file': ''}` | Syntax hightlighing group "DirDiffTreeDirectory" does not work if 'dir' is empty'. If 'dir' and 'file' are both empty, folding does not work. |
 
 ## Syntax highlighting
