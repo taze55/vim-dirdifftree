@@ -96,7 +96,7 @@ def buildTree(left: str, right: str) -> TreeNode:
     leftName = _getNameFromPath(left)
     rightName = _getNameFromPath(right)
 
-    topNode = TreeNode("", f"{leftName}{os.sep}{rightName}", "dir", "both")
+    topNode = TreeNode("", f"{leftName}/{rightName}", "dir", "both")
     nodeMap = {"": topNode}
     _buildRight(right, nodeMap)
     _buildLeft(left, nodeMap)
