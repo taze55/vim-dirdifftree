@@ -1,4 +1,3 @@
-ignorecase
+compare ignorecase option
 can open above right bottom
-can setting thread string
-can setting symbol
+convert os.walk to Pathlib
