@@ -12,6 +12,7 @@
     [tool.poetry.group.dev.dependencies]
         black  = "^23.1.0"
         pytest = "^7.2.1"
+        pynvim = "^0.4.3"
 
 [tool.pytest.ini_options]
     pythonpath = "."

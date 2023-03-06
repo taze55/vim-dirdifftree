@@ -217,9 +217,9 @@ def _dirDiffTreeOpenRenderResult(renderResult: RenderResult, row: int) -> None:
     try:
         if diffTargets.right == "":
             tempfile = vim.eval("tempname()")
-            vim.command(f"silent diffsplit {tempfile} | setlocal buftype=nowrite | setlocal noswapfile")
+            vim.command(f"silent vert diffsplit {tempfile} | setlocal buftype=nowrite | setlocal noswapfile")
         else:
-            vim.command(f"silent diffsplit {diffTargets.right}")
+            vim.command(f"silent vert diffsplit {diffTargets.right}")
     except vim.error as ex:
         vim.command(f"silent! bdelete {state.leftBuffer.number}")
         vim.command(f"silent! match DirDiffTreeFailed '\\%{row}l\\%>{startCol}c\\%<{endCol}c'")

@@ -15,7 +15,7 @@ setlocal nowrap
 
 setlocal foldtext=getline(v:foldstart)
 setlocal foldmethod=expr
-setlocal foldexpr=<SID>DirDiffTreeFoldExpr()
+setlocal foldexpr=DirDiffTreeFoldExpr()
 
 nnoremap <buffer> <silent> o             :call dirdifftree#open()<CR>
 nnoremap <buffer> <silent> <CR>          :call dirdifftree#open_or_toggle_fold()<CR>
@@ -23,9 +23,9 @@ nnoremap <buffer> <silent> <2-Leftmouse> :call dirdifftree#open_or_toggle_fold()
 nnoremap <buffer> <silent> <C-N>         :call dirdifftree#goto_next_file()<CR>
 nnoremap <buffer> <silent> <C-P>         :call dirdifftree#goto_previous_file()<CR>
 
-function! <SID>DirDiffTreeFoldExpr()
-  function! <SID>StartsWithThread(thread)
-    if <SID>StartsWith(s:line, a:thread)
+function! DirDiffTreeFoldExpr()
+  function! DirDiffTreeStartsWithThread(thread)
+    if DirDiffTreeStartsWith(s:line, a:thread)
       let s:line = s:line[len(a:thread):]
       let s:fold_level += 1
       return 1
@@ -34,7 +34,7 @@ function! <SID>DirDiffTreeFoldExpr()
   endfunction
 
   " https://vi.stackexchange.com/questions/29062/how-to-check-if-a-string-starts-with-another-string-in-vimscript
-  function! <SID>StartsWith(longer, shorter)
+  function! DirDiffTreeStartsWith(longer, shorter)
     return a:longer[0:len(a:shorter) - 1] ==# a:shorter
   endfunction
 
@@ -45,10 +45,10 @@ function! <SID>DirDiffTreeFoldExpr()
   let l:i = 0
   let l:match_threads = 0
   while l:i < l:fold_nest_max
-    if     <SID>StartsWithThread(g:DirDiffTreeThreads['blank'])
-    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['vertical'])
-    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['branch'])
-    elseif <SID>StartsWithThread(g:DirDiffTreeThreads['corner'])
+    if     DirDiffTreeStartsWithThread(g:DirDiffTreeThreads['blank'])
+    elseif DirDiffTreeStartsWithThread(g:DirDiffTreeThreads['vertical'])
+    elseif DirDiffTreeStartsWithThread(g:DirDiffTreeThreads['branch'])
+    elseif DirDiffTreeStartsWithThread(g:DirDiffTreeThreads['corner'])
     else
       break
     endif
@@ -66,13 +66,13 @@ function! <SID>DirDiffTreeFoldExpr()
 
   " dir or file
   if l:dir_icon != ''
-    if <SID>StartsWith(s:line, l:dir_icon)
+    if DirDiffTreeStartsWith(s:line, l:dir_icon)
       return '>' . s:fold_level
     else
       return s:fold_level - 1
     endif
   elseif l:file_icon  != ''
-    if <SID>StartsWith(s:line, l:file_icon)
+    if DirDiffTreeStartsWith(s:line, l:file_icon)
       return s:fold_level - 1
     else
       return '>' . s:fold_level
