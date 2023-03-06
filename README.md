@@ -41,6 +41,24 @@ DirDiffTree requires python 3.8.10 or later to work. Install as needed.
 
 To open DirDiffTree from the command line, run `vim -c "DirDiffTree dir1 dir2"`
 
+## Configuration in Git
+
+If you want to use it with git difftool, you can set it in .gitconfig as follows (this is an example of a configuration)
+
+```
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[difftool "vimdiff"]
+  cmd = vim -c \"DirDiffTree \"$LOCAL\" \"$REMOTE\"\"
+
+[alias]
+	showtool = "!showci () { rev=${1:-HEAD}; git difftool -d $rev~1 $rev; }; showci $1"
+```
+
 ## Options
 
 The following options are available.
@@ -51,6 +69,15 @@ The following options are available.
 | g:DirDiffTreeNoneFileWindowWidth | 32                                                                                         | Not used below 0                                                                                                                              |
 | g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}`                     |                                                                                                                                               |
 | g:DirDiffTreeIcons               | macOS<br /> `{'dir': '🇩 ', 'file': '🇫 '}`<br />others<br /> `{'dir': '[D]', 'file': ''}` | Syntax hightlighing group "DirDiffTreeDirectory" does not work if 'dir' is empty'. If 'dir' and 'file' are both empty, folding does not work. |
+
+## Mapping
+
+If you want to set up Mapping, you can do so in `~/.vim/after/ftplugin/dirdifftree.vim`, etc. as follows
+
+```vim
+nmap <buffer> <silent> <Down> <C-N>o
+nmap <buffer> <silent> <Up>   <C-P>o
+```
 
 ## Syntax highlighting
 
