@@ -56,7 +56,7 @@ If you want to use it with git difftool, you can set it in .gitconfig as follows
   cmd = vim -c \"DirDiffTree \"$LOCAL\" \"$REMOTE\"\"
 
 [alias]
-	showtool = "!showci () { rev=${1:-HEAD}; git difftool -d $rev~1 $rev; }; showci $1"
+  showtool = "!showci () { rev=${1:-HEAD}; git difftool -d $rev~1 $rev; }; showci $1"
 ```
 
 ## Options
