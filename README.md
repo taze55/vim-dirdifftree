@@ -56,6 +56,18 @@ If you want to use it with git difftool, you can set it in .gitconfig as follows
   showtool = "!showci () { rev=${1:-HEAD}; git difftool -d $rev~1 $rev; }; showci $1"
 ```
 
+Then you can do the following
+
+```sh
+git difftool
+```
+
+or
+
+```sh
+git showtool
+```
+
 ## Options
 
 The following options are available.
