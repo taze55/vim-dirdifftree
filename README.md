@@ -49,9 +49,6 @@ If you want to use it with git difftool, you can set it in .gitconfig as follows
 [diff]
   tool = vimdiff
 
-[difftool]
-  prompt = false
-
 [difftool "vimdiff"]
   cmd = vim -c \"DirDiffTree \"$LOCAL\" \"$REMOTE\"\"
 
