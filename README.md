@@ -79,6 +79,7 @@ The following options are available.
 | g:DirDiffTreeThreads             | `{'blank': '    ', 'vertical': '│  ', 'branch': '├─', 'corner': '└─'}`                     |                                                                                                                                               |
 | g:DirDiffTreeIcons               | macOS<br /> `{'dir': '🇩 ', 'file': '🇫 '}`<br />others<br /> `{'dir': '[D]', 'file': ''}` | Syntax hightlighing group "DirDiffTreeDirectory" does not work if 'dir' is empty'. If 'dir' and 'file' are both empty, folding does not work. |
 | g:DirDiffTreeExcludeDirs         | `['.git', 'node_modules', '__pycache__']`                                                  |                                                                                                                                               |
+| g:DirDiffTreeIgnoreCase          | 1                                                                                          | Not used for comparison with excluded directories                                                                                             |
 
 ## Mapping
 

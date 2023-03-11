@@ -59,10 +59,12 @@ def dirDiffTreeExecute(leftArg: str, rightArg: str) -> None:
     excludeDirs = vim.eval("g:DirDiffTreeExcludeDirs")
     threadStrs = vim.eval("g:DirDiffTreeThreads")
     iconsStrs = vim.eval("g:DirDiffTreeIcons")
+    ignoreCase = True if int(vim.eval("g:DirDiffTreeIgnoreCase")) != 0 else False
 
     # rendering
-    topNode = buildTree(left, right, excludeDirs)
-    renderOption = RenderOption(fileLexicalOrder, "right", True, False, threadStrs, iconsStrs)
+    buildTreeOption = BuildTreeOption(excludeDirs, ignoreCase, "right")
+    topNode = buildTree(left, right, buildTreeOption)
+    renderOption = RenderOption(fileLexicalOrder, True, False, threadStrs, iconsStrs)
     renderResultDetailList = renderNode(topNode, renderOption)
 
     # starting

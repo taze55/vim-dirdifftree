@@ -1,6 +1,6 @@
 [tool.poetry]
     name        = "vim-dirdifftree"
-    version     = "1.0.0"
+    version     = "1.0.2"
     description = ""
     authors     = ["taze55 <taze_a28391214@icloud.com>"]
     readme      = "README.md"

@@ -268,6 +268,29 @@ touch    test_24xx/right/A/B/C/BBB/3
 touch    test_24xx/right/A/B/C/BBB/D/4
 touch    test_24xx/right/A/B/C/BBB/D/E/5
 
+mkdir -p test_25xx/left
+mkdir -p test_25xx/right
+mkdir -p test_25xx/left/a
+touch    test_25xx/left/a/b
+mkdir -p test_25xx/left/C
+touch    test_25xx/left/C/D
+mkdir -p test_25xx/left/E
+touch    test_25xx/left/E/f
+mkdir -p test_25xx/left/I
+touch    test_25xx/left/I/J
+mkdir -p test_25xx/left/G
+touch    test_25xx/left/G/H
+mkdir -p test_25xx/right/A
+touch    test_25xx/right/A/B
+mkdir -p test_25xx/right/c
+touch    test_25xx/right/c/d
+mkdir -p test_25xx/right/E
+touch    test_25xx/right/E/F
+mkdir -p test_25xx/right/g
+touch    test_25xx/right/g/H
+mkdir -p test_25xx/right/I
+touch    test_25xx/right/I/J
+
 # For normalizeDirectory test
 mkdir -p test_n1
 

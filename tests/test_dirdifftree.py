@@ -10,22 +10,28 @@ from python3.dirdifftree_lib import *
 
 defaultThreadStrs: Dict[ThreadKey, str] = {"blank": "    ", "vertical": "│  ", "branch": "├─", "corner": "└─"}
 defaultIconStrs: Dict[IconKey, str] = {"dir": "🇩 ", "file": "🇫 "}
+defaultRenderOption = RenderOption(fileLexicalOrder, True, False, defaultThreadStrs, defaultIconStrs)
+
 defaultExcludeDirs: List[str] = [".git", "node_modules", "__pycache__"]
-defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, defaultIconStrs)
+defaultIgnoreCase = True
+defaultNewerSide = "right"
+defaultBuildTreeOption = BuildTreeOption(defaultExcludeDirs, defaultIgnoreCase, defaultNewerSide)
 
 # https://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory
 baseDir = f"{os.path.dirname(os.path.realpath(__file__))}/test_data"
 
 
 def renderTree(
-    argDir: str, renderOption: RenderOption = defaultRenderOption, excludeDirs: List[str] = defaultExcludeDirs
+    argDir: str,
+    renderOption: RenderOption = defaultRenderOption,
+    buildTreeOption: BuildTreeOption = defaultBuildTreeOption,
 ) -> str:
-    result = renderTreeByLeftRight(f"{argDir}/left", f"{argDir}/right", renderOption, excludeDirs)
+    result = renderTreeByLeftRight(f"{argDir}/left", f"{argDir}/right", renderOption, buildTreeOption)
     return result
 
 
-def renderTreeByLeftRight(left: str, right: str, renderOption: RenderOption, excludeDirs: List[str]) -> str:
-    topNode = buildTree(f"{baseDir}/{left}", f"{baseDir}/{right}", excludeDirs)
+def renderTreeByLeftRight(left: str, right: str, renderOption: RenderOption, buildTreeOption: BuildTreeOption) -> str:
+    topNode = buildTree(f"{baseDir}/{left}", f"{baseDir}/{right}", buildTreeOption)
     renderResultList = renderNode(topNode, renderOption)
     textList = [renderResult.text for renderResult in renderResultList]
     result = "\n".join(textList) + "\n"
@@ -268,9 +274,7 @@ def test_1900_concat_top_alone_dir_only_dir():
     expected = """\
 left/right / A / B / C
 """
-    actual = renderTree(
-        "test_19xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_19xx", RenderOption(fileLexicalOrder, True, True, defaultThreadStrs, defaultIconStrs))
     assert actual == expected
 
 
@@ -281,9 +285,7 @@ left/right / A / B / C
 ├─🇫 11 [-]
 └─🇫 z [+]
 """
-    actual = renderTree(
-        "test_20xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_20xx", RenderOption(fileLexicalOrder, True, True, defaultThreadStrs, defaultIconStrs))
     assert actual == expected
 
 
@@ -360,9 +362,7 @@ left/right
     ├─🇫 z [+]
     └─🇩 P / Q / R [-]
 """
-    actual = renderTree(
-        "test_21xx", RenderOption(fileLexicalOrder, "right", True, True, defaultThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, True, True, defaultThreadStrs, defaultIconStrs))
     assert actual == expected
 
 
@@ -409,9 +409,7 @@ left/right
         └─🇩 Q
             └─🇩 R [-]
 """
-    actual = renderTree(
-        "test_21xx", RenderOption(fileLexicalOrder, "right", False, False, defaultThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, False, False, defaultThreadStrs, defaultIconStrs))
     assert actual == expected
 
 
@@ -450,9 +448,7 @@ left/right
     ├─🇫 z [-]
     └─🇩 P / Q / R [+]
 """
-    actual = renderTree(
-        "test_21xx", RenderOption(fileLexicalOrder, "left", True, False, defaultThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_21xx", buildTreeOption=BuildTreeOption(defaultExcludeDirs, defaultIgnoreCase, "left"))
     assert actual == expected
 
 
@@ -461,39 +457,37 @@ def test_2104_mixed_another_threads():
 left/right
 ^$.*🇫 1
 ^$.*🇫 11
-^$.*🇫 z [+]
+^$.*🇫 z [-]
 ^$.*🇩 A
-BB()^$.*🇫 1 [-]
+BB()^$.*🇫 1 [+]
 BB()^$.*🇫 11
 BB()^$.*🇫 z
 BB()?/\\~🇩 B
-BB()[]AA^$.*🇩 C [-]
-BB()[]AABB()^$.*🇫 1 [-]
-BB()[]AABB()^$.*🇫 11 [-]
-BB()[]AABB()?/\\~🇫 z [-]
-BB()[]AA^$.*🇩 D / E
-BB()[]AABB()^$.*🇫 1 [-]
-BB()[]AABB()^$.*🇫 11 [+]
-BB()[]AABB()?/\\~🇫 z
-BB()[]AA^$.*🇩 F / G / H [-]
-BB()[]AABB()^$.*🇫 1 [-]
-BB()[]AABB()^$.*🇫 11 [-]
-BB()[]AABB()?/\\~🇫 z [-]
-BB()[]AA^$.*🇩 I / J [+] / K [+]
+BB()[]AA^$.*🇩 C [+]
 BB()[]AABB()^$.*🇫 1 [+]
 BB()[]AABB()^$.*🇫 11 [+]
 BB()[]AABB()?/\\~🇫 z [+]
+BB()[]AA^$.*🇩 D / E
+BB()[]AABB()^$.*🇫 1 [+]
+BB()[]AABB()^$.*🇫 11 [-]
+BB()[]AABB()?/\\~🇫 z
+BB()[]AA^$.*🇩 F / G / H [+]
+BB()[]AABB()^$.*🇫 1 [+]
+BB()[]AABB()^$.*🇫 11 [+]
+BB()[]AABB()?/\\~🇫 z [+]
+BB()[]AA^$.*🇩 I / J [-] / K [-]
+BB()[]AABB()^$.*🇫 1 [-]
+BB()[]AABB()^$.*🇫 11 [-]
+BB()[]AABB()?/\\~🇫 z [-]
 BB()[]AA?/\\~🇩 L / M / N
 ?/\\~🇩 O
 []AA^$.*🇫 1
-[]AA^$.*🇫 11 [+]
-[]AA^$.*🇫 z [-]
-[]AA?/\\~🇩 P / Q / R [+]
+[]AA^$.*🇫 11 [-]
+[]AA^$.*🇫 z [+]
+[]AA?/\\~🇩 P / Q / R [-]
 """
     anotherThreadStrs: Dict[ThreadKey, str] = {"blank": "[]AA", "vertical": "BB()", "branch": "^$.*", "corner": "?/\\~"}
-    actual = renderTree(
-        "test_21xx", RenderOption(fileLexicalOrder, "left", True, False, anotherThreadStrs, defaultIconStrs)
-    )
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, True, False, anotherThreadStrs, defaultIconStrs))
     assert actual == expected
 
 
@@ -532,9 +526,7 @@ left/right
     └─[D]P / Q / R [-]
 """
     anotherIconStrs: Dict[IconKey, str] = {"dir": "[D]", "file": ""}
-    actual = renderTree(
-        "test_21xx", RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, anotherIconStrs)
-    )
+    actual = renderTree("test_21xx", RenderOption(fileLexicalOrder, True, False, defaultThreadStrs, anotherIconStrs))
     assert actual == expected
 
 
@@ -567,7 +559,68 @@ left/right
         └─🇫 2 [+]
 """
     excludeDirs = ["AAA", "BBB"]
-    actual = renderTree("test_24xx", excludeDirs=excludeDirs)
+    actual = renderTree("test_24xx", buildTreeOption=BuildTreeOption(excludeDirs, defaultIgnoreCase, defaultNewerSide))
+    assert actual == expected
+
+
+def test_2500_ignore_case():
+    expected = """\
+left/right
+├─🇩 A
+│  └─🇫 B
+├─🇩 c
+│  └─🇫 d
+├─🇩 E
+│  └─🇫 F
+├─🇩 g
+│  └─🇫 H
+└─🇩 I
+    └─🇫 J
+"""
+    actual = renderTree("test_25xx")
+    assert actual == expected
+
+
+def test_2501_ignore_case_left_is_newer():
+    expected = """\
+left/right
+├─🇩 a
+│  └─🇫 b
+├─🇩 C
+│  └─🇫 D
+├─🇩 E
+│  └─🇫 f
+├─🇩 G
+│  └─🇫 H
+└─🇩 I
+    └─🇫 J
+"""
+    actual = renderTree("test_25xx", buildTreeOption=BuildTreeOption(defaultExcludeDirs, defaultIgnoreCase, "left"))
+    assert actual == expected
+
+
+def test_2502_case_sensitive():
+    expected = """\
+left/right
+├─🇩 A [+]
+│  └─🇫 B [+]
+├─🇩 a [-]
+│  └─🇫 b [-]
+├─🇩 C [-]
+│  └─🇫 D [-]
+├─🇩 c [+]
+│  └─🇫 d [+]
+├─🇩 E
+│  ├─🇫 F [+]
+│  └─🇫 f [-]
+├─🇩 G [-]
+│  └─🇫 H [-]
+├─🇩 g [+]
+│  └─🇫 H [+]
+└─🇩 I
+    └─🇫 J
+"""
+    actual = renderTree("test_25xx", buildTreeOption=BuildTreeOption(defaultExcludeDirs, False, defaultNewerSide))
     assert actual == expected
 
 

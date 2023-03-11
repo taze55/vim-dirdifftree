@@ -1,2 +1,1 @@
-compare ignorecase option
 can open above right bottom

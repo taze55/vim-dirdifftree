@@ -27,6 +27,10 @@ if !exists("g:DirDiffTreeExcludeDirs")
     let g:DirDiffTreeExcludeDirs = ['.git', 'node_modules', '__pycache__']
 endif
 
+if !exists("g:DirDiffTreeIgnoreCase")
+    let g:DirDiffTreeIgnoreCase = 1
+endif
+
 py3 import dirdifftree
 
 function! dirdifftree#execute(left, right) abort
