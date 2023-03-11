@@ -1,3 +1,2 @@
 compare ignorecase option
 can open above right bottom
-convert os.walk to Pathlib

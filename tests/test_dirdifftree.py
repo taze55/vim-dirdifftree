@@ -10,19 +10,22 @@ from python3.dirdifftree_lib import *
 
 defaultThreadStrs: Dict[ThreadKey, str] = {"blank": "    ", "vertical": "│  ", "branch": "├─", "corner": "└─"}
 defaultIconStrs: Dict[IconKey, str] = {"dir": "🇩 ", "file": "🇫 "}
+defaultExcludeDirs: List[str] = [".git", "node_modules", "__pycache__"]
 defaultRenderOption = RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, defaultIconStrs)
 
 # https://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory
 baseDir = f"{os.path.dirname(os.path.realpath(__file__))}/test_data"
 
 
-def renderTree(argDir: str, renderOption: RenderOption = defaultRenderOption) -> str:
-    result = renderTreeByLeftRight(f"{argDir}/left", f"{argDir}/right", renderOption)
+def renderTree(
+    argDir: str, renderOption: RenderOption = defaultRenderOption, excludeDirs: List[str] = defaultExcludeDirs
+) -> str:
+    result = renderTreeByLeftRight(f"{argDir}/left", f"{argDir}/right", renderOption, excludeDirs)
     return result
 
 
-def renderTreeByLeftRight(left: str, right: str, renderOption: RenderOption = defaultRenderOption) -> str:
-    topNode = buildTree(f"{baseDir}/{left}", f"{baseDir}/{right}")
+def renderTreeByLeftRight(left: str, right: str, renderOption: RenderOption, excludeDirs: List[str]) -> str:
+    topNode = buildTree(f"{baseDir}/{left}", f"{baseDir}/{right}", excludeDirs)
     renderResultList = renderNode(topNode, renderOption)
     textList = [renderResult.text for renderResult in renderResultList]
     result = "\n".join(textList) + "\n"
@@ -532,6 +535,39 @@ left/right
     actual = renderTree(
         "test_21xx", RenderOption(fileLexicalOrder, "right", True, False, defaultThreadStrs, anotherIconStrs)
     )
+    assert actual == expected
+
+
+def test_2200_exclude_dirs_empty():
+    expected = """\
+left/right
+"""
+    actual = renderTree("test_22xx")
+    assert actual == expected
+
+
+def test_2300_exclude_dirs():
+    expected = """\
+left/right
+└─🇩 A
+    ├─🇫 1
+    └─🇩 B [+] / C [+]
+        └─🇫 2 [+]
+"""
+    actual = renderTree("test_23xx")
+    assert actual == expected
+
+
+def test_2400_exclude_dirs_another_dirs():
+    expected = """\
+left/right
+└─🇩 A
+    ├─🇫 1
+    └─🇩 B [+] / C [+]
+        └─🇫 2 [+]
+"""
+    excludeDirs = ["AAA", "BBB"]
+    actual = renderTree("test_24xx", excludeDirs=excludeDirs)
     assert actual == expected
 
 

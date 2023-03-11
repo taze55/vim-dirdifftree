@@ -23,6 +23,10 @@ if !exists("g:DirDiffTreeIcons")
   endif
 endif
 
+if !exists("g:DirDiffTreeExcludeDirs")
+    let g:DirDiffTreeExcludeDirs = ['.git', 'node_modules', '__pycache__']
+endif
+
 py3 import dirdifftree
 
 function! dirdifftree#execute(left, right) abort

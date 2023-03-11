@@ -96,25 +96,26 @@ def normalizeDirectory(directory: str) -> str:
     return os.path.abspath(directoryTrimed)
 
 
-def buildTree(left: str, right: str) -> TreeNode:
+def buildTree(left: str, right: str, excludeDirs: List[str]) -> TreeNode:
     leftName = _getNameFromPath(left)
     rightName = _getNameFromPath(right)
 
     topNode = TreeNode("", f"{leftName}/{rightName}", "dir", "both")
     nodeMap = {"": topNode}
-    _buildRight(right, nodeMap)
-    _buildLeft(left, nodeMap)
+    _buildRight(right, excludeDirs, nodeMap)
+    _buildLeft(left, excludeDirs, nodeMap)
 
     return topNode
 
 
-def _buildRight(right: str, nodeMap: NodeMap) -> None:
+def _buildRight(right: str, excludeDirs: List[str], nodeMap: NodeMap) -> None:
     rightResult = os.walk(right)
 
     for parentPath, dirNames, fileNames in rightResult:
         relativeParentPath = parentPath.replace(right, "", 1)
         parentNode = nodeMap[relativeParentPath]
 
+        dirNames[:] = [d for d in dirNames if d not in excludeDirs]
         for dirName in dirNames:
             _buildRightNode(dirName, relativeParentPath, parentNode, nodeMap, "dir")
 
@@ -131,13 +132,14 @@ def _buildRightNode(
     parentNode.children.append(newNode)
 
 
-def _buildLeft(left: str, nodeMap: NodeMap) -> None:
+def _buildLeft(left: str, excludeDirs: List[str], nodeMap: NodeMap) -> None:
     leftResult = os.walk(left)
 
     for parentPath, dirNames, fileNames in leftResult:
         relativeParentPath = parentPath.replace(left, "", 1)
         parentNode = nodeMap[relativeParentPath]
 
+        dirNames[:] = [d for d in dirNames if d not in excludeDirs]
         for dirName in dirNames:
             _buildLeftNode(dirName, relativeParentPath, parentNode, nodeMap, "dir")
 

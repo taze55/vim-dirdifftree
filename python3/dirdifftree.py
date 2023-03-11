@@ -56,10 +56,12 @@ def dirDiffTreeExecute(leftArg: str, rightArg: str) -> None:
     if left == right:
         _printVimWarning("both are the same directory")
 
-    # rendering
-    topNode = buildTree(left, right)
+    excludeDirs = vim.eval("g:DirDiffTreeExcludeDirs")
     threadStrs = vim.eval("g:DirDiffTreeThreads")
     iconsStrs = vim.eval("g:DirDiffTreeIcons")
+
+    # rendering
+    topNode = buildTree(left, right, excludeDirs)
     renderOption = RenderOption(fileLexicalOrder, "right", True, False, threadStrs, iconsStrs)
     renderResultDetailList = renderNode(topNode, renderOption)
 

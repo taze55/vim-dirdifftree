@@ -232,6 +232,42 @@ touch    test_21xx/right/A/B/F/G/H/z
 touch    test_21xx/right/O/1
 touch    test_21xx/right/O/z
 
+mkdir -p test_22xx/left
+mkdir -p test_22xx/right
+mkdir -p test_22xx/left/.git
+touch    test_22xx/left/.git/1
+mkdir -p test_22xx/left/__pycache__
+mkdir -p test_22xx/right/node_modules
+touch    test_22xx/right/node_modules/2
+
+mkdir -p test_23xx/left
+mkdir -p test_23xx/right
+mkdir -p test_23xx/left/A/.git/B/C
+touch    test_23xx/left/A/1
+touch    test_23xx/left/A/.git/2
+touch    test_23xx/left/A/.git/B/3
+touch    test_23xx/left/A/.git/B/C/4
+mkdir -p test_23xx/right/A/B/C/node_modules/D/E
+touch    test_23xx/right/A/1
+touch    test_23xx/right/A/B/C/2
+touch    test_23xx/right/A/B/C/node_modules/3
+touch    test_23xx/right/A/B/C/node_modules/D/4
+touch    test_23xx/right/A/B/C/node_modules/D/E/5
+
+mkdir -p test_24xx/left
+mkdir -p test_24xx/right
+mkdir -p test_24xx/left/A/AAA/B/C
+touch    test_24xx/left/A/1
+touch    test_24xx/left/A/AAA/2
+touch    test_24xx/left/A/AAA/B/3
+touch    test_24xx/left/A/AAA/B/C/4
+mkdir -p test_24xx/right/A/B/C/BBB/D/E
+touch    test_24xx/right/A/1
+touch    test_24xx/right/A/B/C/2
+touch    test_24xx/right/A/B/C/BBB/3
+touch    test_24xx/right/A/B/C/BBB/D/4
+touch    test_24xx/right/A/B/C/BBB/D/E/5
+
 # For normalizeDirectory test
 mkdir -p test_n1
 
