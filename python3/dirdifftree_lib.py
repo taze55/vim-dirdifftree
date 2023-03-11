@@ -97,8 +97,8 @@ def normalizeDirectory(directory: str) -> str:
 
 
 def buildTree(left: str, right: str, excludeDirs: List[str]) -> TreeNode:
-    leftName = _getNameFromPath(left)
-    rightName = _getNameFromPath(right)
+    leftName = os.path.basename(left)
+    rightName = os.path.basename(right)
 
     topNode = TreeNode("", f"{leftName}/{rightName}", "dir", "both")
     nodeMap = {"": topNode}
@@ -212,11 +212,6 @@ def _renderNodeChildren(
 
         if not isAloneDir:
             threadStack.pop()
-
-
-def _getNameFromPath(path: str) -> str:
-    s = path.rsplit(os.sep, 1)
-    return s[-1]
 
 
 if __name__ == "__main__":
